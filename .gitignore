@@ -1,0 +1,13 @@
+.idea
+node_modules
+client/node_modules
+client/bower_components
+jspm_packages
+npm-debug.*
+link-checker-results.txt
+client/app/**/*.js
+*.js.map
+client/e2e/**/*.js
+client/e2e/**/*.js.map
+_test-output
+_temp
