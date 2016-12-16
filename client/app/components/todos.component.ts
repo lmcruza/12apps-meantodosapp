@@ -52,11 +52,13 @@ export class TodosComponent implements OnInit {
             .map(res => res.json())
             .subscribe(data => {
                 todo.isCompleted = !todo.isCompleted;
+                if (todo.isCompleted)
+                    todo.isEditMode = false;
             });
     }
 
     setEditState(todo: Todo, state) {
-        if (state) {
+        if (state && !todo.isCompleted) {
             todo.isEditMode = state;
         } else {
             delete todo.isEditMode;
