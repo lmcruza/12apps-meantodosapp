@@ -63,7 +63,7 @@ router.put('/todo/:id', function(req, res, next){
         })
     } else {
         db.todos.update({
-            _id: mongojs.ObjectId(req.params.is)
+            _id: mongojs.ObjectId(req.params.id)
         }, updObj, function(err, result){
             if(err){
                 res.send(err);

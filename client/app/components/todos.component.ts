@@ -13,8 +13,8 @@ import 'rxjs/add/operator/map';
 export class TodosComponent implements OnInit {
 
     todos: Todo[];
-    
-    constructor(private _todoService:TodoService) {
+
+    constructor(private _todoService: TodoService) {
 
     }
 
@@ -26,7 +26,7 @@ export class TodosComponent implements OnInit {
     }
 
     addTodo($event, todoText) {
-        if($event.which === 1){
+        if ($event.which === 1) {
             var result;
             var newTodo = {
                 text: todoText.value;
@@ -40,4 +40,44 @@ export class TodosComponent implements OnInit {
             });
         }
     }
+
+    updateStatus(todo: Todo) {
+        var _todo = {
+            _id: todo._id,
+            text: todo.text,
+            isCompleted: !todo.isCompleted
+        };
+
+        this._todoService.updateTodo(_todo)
+            .map(res => res.json())
+            .subscribe(data => {
+                todo.isCompleted = !todo.isCompleted;
+            });
+    }
+
+    setEditState(todo: Todo, state) {
+        if (state) {
+            todo.isEditMode = state;
+        } else {
+            delete todo.isEditMode;
+        }
+    }
+
+    updateTodoText($event, todo: Todo) {
+        if ($event.which === 13) {
+            todo.text = $event.target.value;
+            var _todo = {
+                _id: todo._id,
+                text: todo.text,
+                isCompleted: todo.isCompleted
+            };
+
+            this._todoService.updateTodo(_todo)
+                .map(res => res.json())
+                .subscribe(data => {
+                    this.setEditState(todo, false);
+                });
+        }
+    }
+
 }
